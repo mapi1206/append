@@ -55,12 +55,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             int newWins = currentWins + wins;
             int newLosses = currentLosses + losses;
             int newMatches = newWins + newLosses;
-            // Removed erroneous call to updateValues before its declaration
 
             ContentValues updateValues = new ContentValues();
             updateValues.put(COLUMN_WINS, newWins);
             updateValues.put(COLUMN_LOSSES, newLosses);
-            updateValues.put(COLUMN_MATCHES, newMatches); // Ensure matches updates
+            updateValues.put(COLUMN_MATCHES, newMatches);
 
             int rowsUpdated = db.update(TABLE_TEAMS, updateValues, COLUMN_TEAM_NAME + "=?", new String[]{teamName});
             cursor.close();
@@ -69,8 +68,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
         cursor.close();
 
-        int matches = wins + losses; // Ensure matches is calculated correctly
-        // Removed erroneous call to values before its declaration
+        int matches = wins + losses;
 
         ContentValues values = new ContentValues();
         values.put(COLUMN_TEAM_NAME, teamName);
@@ -92,7 +90,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public Cursor getAllTeams() {
         SQLiteDatabase db = this.getReadableDatabase();
-        return db.rawQuery("SELECT * FROM " + TABLE_TEAMS, null);
+        return db.rawQuery("SELECT * FROM " + TABLE_TEAMS + " ORDER BY " + COLUMN_WINS + " DESC", null);
     }
 
     public Cursor getAllTeamsSortedByWins() {

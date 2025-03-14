@@ -14,13 +14,13 @@
 
     <fragment
         android:id="@+id/tabella"
-        android:name="wifi.svdew.myapplication.ui.dashboard.DashboardFragment"
+        android:name="wifi.svdew.myapplication.ui.tabella.TabellaFragment"
         android:label="@string/title_tabella"
-        tools:layout="@layout/fragment_dashboard" />
+        tools:layout="@layout/fragment_tabella" />
 
     <fragment
         android:id="@+id/navigation_notifications"
-        android:name="wifi.svdew.myapplication.ui.notifications.NotificationsFragment"
+        android:name="wifi.svdew.myapplication.ui.news.NewsFragment"
         android:label="@string/title_notifications"
-        tools:layout="@layout/fragment_notifications" />
+        tools:layout="@layout/fragment_news" />
 </navigation>
