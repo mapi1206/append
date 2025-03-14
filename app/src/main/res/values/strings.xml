@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">My Application</string>
+    <string name="title_home">Kezdölap</string>
+    <string name="title_tabella">Tabella</string>
+    <string name="title_hirek">Hírek</string>
+    <string name="title_notifications">Értesítések</string>
+    <string name="recycler_view_description">Lista elemek megjelenítése</string>
+    <string name="table_scroll_description">Scrollable table view</string>
+    <string name="header_position">H</string>
+    <string name="header_teams">Csapatok</string>
+    <string name="header_wins">GY</string>
+    <string name="header_losses">V</string>
+    <string name="header_matches">M</string>
+</resources>
