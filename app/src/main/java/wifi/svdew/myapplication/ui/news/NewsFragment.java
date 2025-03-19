@@ -19,9 +19,13 @@ import com.kwabenaberko.newsapilib.models.Article;
 import com.kwabenaberko.newsapilib.models.request.TopHeadlinesRequest;
 import com.kwabenaberko.newsapilib.models.response.ArticleResponse;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 import wifi.svdew.myapplication.databinding.FragmentNewsBinding;
 
 public class NewsFragment extends Fragment implements View.OnClickListener {
@@ -33,6 +37,8 @@ public class NewsFragment extends Fragment implements View.OnClickListener {
     LinearProgressIndicator progressIndicator;
     Button btn1, btn2, btn3, btn4, btn5, btn6, btn7;
     androidx.appcompat.widget.SearchView searchView;
+
+    private static final String API_KEY = "f58a9be9e97c4238993864b43e768db1"; // Az API kulcs
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -63,7 +69,7 @@ public class NewsFragment extends Fragment implements View.OnClickListener {
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                getNews("GENERAL", query);
+                getNews("general", query);
                 return true;
             }
 
@@ -74,7 +80,7 @@ public class NewsFragment extends Fragment implements View.OnClickListener {
         });
 
         setupRecyclerView();
-        getNews("GENERAL", null);
+        getNews("general", null);
 
         return root;
     }
@@ -100,36 +106,41 @@ public class NewsFragment extends Fragment implements View.OnClickListener {
 
     void getNews(String category, String query) {
         changeInProgress(true);  // Töltősáv megjelenítése
-        NewsApiClient newsApiClient = new NewsApiClient("a8d52530b011b567636aefa7c18437a8"); // Fixing typo in client initialization
-        newsApiClient.getTopHeadlines(
-                new TopHeadlinesRequest.Builder()
-                        .language("en")
-                        .category(category)
-                        .q(query)
-                        .build(),
-                new NewsApiClient.ArticlesResponseCallback() {
-                    @Override
-                    public void onSuccess(ArticleResponse response) {
-                        requireActivity().runOnUiThread(() -> {
-                            changeInProgress(false);  // Töltősáv eltűnik
-                            Log.d("NewsApi", "Received articles: " + response.getArticles());
-                            if (response.getArticles() != null && !response.getArticles().isEmpty()) {
-                                adapter.updateData(response.getArticles());
-                                adapter.notifyDataSetChanged();
-                            } else {
-                                Log.d("NewsApi", "No articles found.");
-                            }
-                        });
-                    }
+        NewsApiInterface apiInterface = ApiClient.getRetrofitInstance().create(NewsApiInterface.class);
 
-                    @Override
-                    public void onFailure(Throwable throwable) {
-                        Log.e("NewsApi", "API request failed: " + throwable.getMessage());
-                        Log.e("NewsApi", "Error details: " + throwable.getLocalizedMessage());
-                        changeInProgress(false);  // Töltősáv eltűnik hiba esetén
+        Call<ArticleResponse> call = apiInterface.getTopHeadlines(category, query, "en", API_KEY);
+
+        call.enqueue(new Callback<ArticleResponse>() {
+            @Override
+            public void onResponse(Call<ArticleResponse> call, Response<ArticleResponse> response) {
+                requireActivity().runOnUiThread(() -> {
+                    changeInProgress(false);  // Töltősáv eltűnik
+                    if (response.isSuccessful() && response.body() != null) {
+                        ArticleResponse articleResponse = response.body();
+                        List<Article> articles = articleResponse.getArticles();
+                        if (articles != null && !articles.isEmpty()) {
+                            adapter.updateData(articles);
+                            adapter.notifyDataSetChanged();
+                        } else {
+                            Log.d("NewsApi", "No articles found.");
+                        }
+                    } else {
+                        try {
+                            String errorResponse = response.errorBody().string();
+                            Log.e("NewsApi", "Failed to retrieve articles: " + errorResponse);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
                     }
-                }
-        );
+                });
+            }
+
+            @Override
+            public void onFailure(Call<ArticleResponse> call, Throwable t) {
+                Log.e("NewsApi", "API request failed: " + t.getMessage());
+                changeInProgress(false);  // Töltősáv eltűnik hiba esetén
+            }
+        });
     }
 
     @Override

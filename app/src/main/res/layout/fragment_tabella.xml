@@ -114,5 +114,22 @@
         </HorizontalScrollView>
 
     </androidx.drawerlayout.widget.DrawerLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="8dp"
+        android:gravity="left"
+        android:layout_marginTop="625dp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:padding="16dp"
+        android:text="H - helyezés, M - mérkőzések, V - vereségek, Gy - győzelmek"
+        android:textSize="16sp"
+        android:gravity="start"
+        android:textColor="@android:color/white"/>
+    </LinearLayout>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

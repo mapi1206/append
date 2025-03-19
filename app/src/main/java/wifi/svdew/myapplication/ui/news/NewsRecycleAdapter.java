@@ -38,8 +38,8 @@ public class NewsRecycleAdapter extends RecyclerView.Adapter<NewsRecycleAdapter.
         holder.titleTextView.setText(article.getTitle());
         holder.sourceTextView.setText(article.getSource().getName());
         Picasso.get().load(article.getUrlToImage())
-                .error(R.drawable.ic_launcher_background)
-                .placeholder(R.drawable.ic_launcher_background)
+                .error(R.drawable.baseline_newspaper_24)
+                .placeholder(R.drawable.baseline_newspaper_24)
                 .into(holder.imageView);
 
         holder.itemView.setOnClickListener(v -> {
