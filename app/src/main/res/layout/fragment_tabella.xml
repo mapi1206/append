@@ -1,135 +1,194 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.tabella.TabellaFragment">
 
-    <!-- Gombok lejjebb és balra helyezve -->
-    <LinearLayout
+    <!-- Elrejtett konténer, ha kell később -->
+    <FrameLayout
+        android:id="@+id/container"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:padding="8dp"
-        android:gravity="left"
-        android:layout_marginTop="47dp">
+        android:layout_height="match_parent"
+        android:layout_marginTop="100dp"
+        android:visibility="gone" />
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/btn8"
-            android:layout_margin="6dp"
-            android:text="MB1"/>
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/btn9"
-            android:layout_margin="6dp"
-            android:text="Euroleague"/>
-    </LinearLayout>
-
-    <!-- Táblázat -->
     <androidx.drawerlayout.widget.DrawerLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <HorizontalScrollView
+        <!-- Tartalom -->
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:fillViewport="true"
-            android:padding="16dp">
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-            <TableLayout
-                android:id="@+id/teamTableLayout"
-                android:layout_width="wrap_content"
+            <!-- Gombok -->
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="100dp"
-                android:stretchColumns="1,2,3,4"
-                android:background="@drawable/table_border">
+                android:orientation="horizontal"
+                android:padding="10dp"
+                android:gravity="start"
+                android:layout_marginTop="45dp"
+                android:layout_marginBottom="4dp">
 
-                <!-- Table Headers -->
-                <TableRow
-                    android:background="@drawable/table_border">
+                <Button
+                    android:id="@+id/btn8"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="6dp"
+                    android:text="@string/mb1" />
 
-                    <TextView
-                        android:layout_width="80dp"
+                <Button
+                    android:id="@+id/btn9"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="6dp"
+                    android:text="@string/euroleague" />
+            </LinearLayout>
+
+            <!-- Táblázatok -->
+            <HorizontalScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fillViewport="true"
+                android:padding="16dp">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <!-- TableLayout 1 -->
+                    <TableLayout
+                        android:id="@+id/teamTableLayout1"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:padding="12dp"
-                        android:text="H"
-                        android:textStyle="bold"
-                        android:textSize="18sp"
-                        android:gravity="center"
-                        android:textColor="@android:color/white"
-                        android:background="@drawable/table_border"/>
+                        android:layout_marginTop="0dp"
+                        android:stretchColumns="1,2,3,4"
+                        android:background="@drawable/table_border">
 
-                    <TextView
-                        android:layout_width="200dp"
+                        <TableRow android:background="@drawable/table_border">
+                            <TextView
+                                android:layout_width="80dp"
+                                android:layout_height="wrap_content"
+                                android:padding="12dp"
+                                android:text="@string/h"
+                                android:textStyle="bold"
+                                android:textSize="18sp"
+                                android:gravity="center"
+                                android:textColor="@android:color/white"
+                                android:background="@drawable/table_border" />
+                            <TextView
+                                android:layout_width="200dp"
+                                android:layout_height="wrap_content"
+                                android:padding="12dp"
+                                android:text="@string/csapat"
+                                android:textStyle="bold"
+                                android:textSize="18sp"
+                                android:gravity="center"
+                                android:textColor="@android:color/white"
+                                android:background="@drawable/table_border" />
+                            <TextView
+                                android:layout_width="80dp"
+                                android:layout_height="wrap_content"
+                                android:padding="12dp"
+                                android:text="@string/m"
+                                android:textStyle="bold"
+                                android:textSize="18sp"
+                                android:gravity="center"
+                                android:textColor="@android:color/white"
+                                android:background="@drawable/table_border" />
+                            <TextView
+                                android:layout_width="80dp"
+                                android:layout_height="wrap_content"
+                                android:padding="12dp"
+                                android:text="@string/gy"
+                                android:textStyle="bold"
+                                android:textSize="18sp"
+                                android:gravity="center"
+                                android:textColor="@android:color/white"
+                                android:background="@drawable/table_border" />
+                            <TextView
+                                android:layout_width="80dp"
+                                android:layout_height="wrap_content"
+                                android:padding="12dp"
+                                android:text="@string/v"
+                                android:textStyle="bold"
+                                android:textSize="18sp"
+                                android:gravity="center"
+                                android:textColor="@android:color/white"
+                                android:background="@drawable/table_border" />
+                        </TableRow>
+                    </TableLayout>
+
+                    <!-- TableLayout 2 -->
+                    <TableLayout
+                        android:id="@+id/teamTableLayout2"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:padding="12dp"
-                        android:text="Csapat"
-                        android:textStyle="bold"
-                        android:textSize="18sp"
-                        android:gravity="center"
-                        android:textColor="@android:color/white"
-                        android:background="@drawable/table_border"/>
+                        android:layout_marginTop="16dp"
+                        android:stretchColumns="1,2,3,4"
+                        android:background="@drawable/table_border">
 
-                    <TextView
-                        android:layout_width="80dp"
-                        android:layout_height="wrap_content"
-                        android:padding="12dp"
-                        android:text="M"
-                        android:textStyle="bold"
-                        android:textSize="18sp"
-                        android:gravity="center"
-                        android:textColor="@android:color/white"
-                        android:background="@drawable/table_border"/>
+                        <TableRow android:background="@drawable/table_border">
+                            <TextView
+                                android:layout_width="80dp"
+                                android:layout_height="wrap_content"
+                                android:padding="12dp"
+                                android:text="@string/h"
+                                android:textStyle="bold"
+                                android:textSize="18sp"
+                                android:gravity="center"
+                                android:textColor="@android:color/white"
+                                android:background="@drawable/table_border" />
+                            <TextView
+                                android:layout_width="200dp"
+                                android:layout_height="wrap_content"
+                                android:padding="12dp"
+                                android:text="@string/csapat"
+                                android:textStyle="bold"
+                                android:textSize="18sp"
+                                android:gravity="center"
+                                android:textColor="@android:color/white"
+                                android:background="@drawable/table_border" />
+                            <TextView
+                                android:layout_width="80dp"
+                                android:layout_height="wrap_content"
+                                android:padding="12dp"
+                                android:text="@string/m"
+                                android:textStyle="bold"
+                                android:textSize="18sp"
+                                android:gravity="center"
+                                android:textColor="@android:color/white"
+                                android:background="@drawable/table_border" />
+                            <TextView
+                                android:layout_width="80dp"
+                                android:layout_height="wrap_content"
+                                android:padding="12dp"
+                                android:text="@string/gy"
+                                android:textStyle="bold"
+                                android:textSize="18sp"
+                                android:gravity="center"
+                                android:textColor="@android:color/white"
+                                android:background="@drawable/table_border" />
+                            <TextView
+                                android:layout_width="80dp"
+                                android:layout_height="wrap_content"
+                                android:padding="12dp"
+                                android:text="@string/v"
+                                android:textStyle="bold"
+                                android:textSize="18sp"
+                                android:gravity="center"
+                                android:textColor="@android:color/white"
+                                android:background="@drawable/table_border" />
+                        </TableRow>
+                    </TableLayout>
 
-                    <TextView
-                        android:layout_width="80dp"
-                        android:layout_height="wrap_content"
-                        android:padding="12dp"
-                        android:text="Gy"
-                        android:textStyle="bold"
-                        android:textSize="18sp"
-                        android:gravity="center"
-                        android:textColor="@android:color/white"
-                        android:background="@drawable/table_border"/>
-
-                    <TextView
-                        android:layout_width="80dp"
-                        android:layout_height="wrap_content"
-                        android:padding="12dp"
-                        android:text="V"
-                        android:textStyle="bold"
-                        android:textSize="18sp"
-                        android:gravity="center"
-                        android:textColor="@android:color/white"
-                        android:background="@drawable/table_border"/>
-                </TableRow>
-
-            </TableLayout>
-
-        </HorizontalScrollView>
-
+                </LinearLayout>
+            </HorizontalScrollView>
+        </LinearLayout>
     </androidx.drawerlayout.widget.DrawerLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:padding="8dp"
-        android:gravity="left"
-        android:layout_marginTop="625dp">
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:padding="16dp"
-        android:text="H - helyezés, M - mérkőzések, V - vereségek, Gy - győzelmek"
-        android:textSize="16sp"
-        android:gravity="start"
-        android:textColor="@android:color/white"/>
-    </LinearLayout>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

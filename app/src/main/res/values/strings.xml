@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">My Application</string>
+    <string name="app_name">BAN</string>
     <string name="title_home">Kezdölap</string>
     <string name="title_tabella">Tabella</string>
     <string name="title_hirek">Hírek</string>
@@ -11,4 +11,11 @@
     <string name="header_wins">GY</string>
     <string name="header_losses">V</string>
     <string name="header_matches">M</string>
+    <string name="mb1">MB1</string>
+    <string name="euroleague">Euroleague</string>
+    <string name="h">H</string>
+    <string name="csapat">Csapat</string>
+    <string name="m">M</string>
+    <string name="gy">Gy</string>
+    <string name="v">V</string>
 </resources>

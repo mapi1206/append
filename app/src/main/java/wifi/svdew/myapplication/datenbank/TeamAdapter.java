@@ -1,5 +1,6 @@
 package wifi.svdew.myapplication.datenbank;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.database.Cursor;
 import android.view.LayoutInflater;
@@ -13,7 +14,7 @@ import wifi.svdew.myapplication.R;
 
 public class TeamAdapter extends RecyclerView.Adapter<TeamAdapter.ViewHolder> {
 
-    private Context context;
+    private final Context context;
     private Cursor cursor;
 
     public TeamAdapter(Context context, Cursor cursor) {
@@ -50,6 +51,7 @@ public class TeamAdapter extends RecyclerView.Adapter<TeamAdapter.ViewHolder> {
         return cursor.getCount();
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     public void updateCursor(Cursor newCursor) {
         if (newCursor != null) {
             this.cursor = newCursor;

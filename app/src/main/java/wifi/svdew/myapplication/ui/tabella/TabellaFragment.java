@@ -7,10 +7,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
-import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -22,7 +22,7 @@ import wifi.svdew.myapplication.datenbank.DatabaseHelper;
 public class TabellaFragment extends Fragment {
 
     private FragmentTabellaBinding binding;
-    private TableLayout tableLayout;
+    private TableLayout tableLayout1, tableLayout2;
     private DatabaseHelper databaseHelper;
 
     @Override
@@ -31,30 +31,55 @@ public class TabellaFragment extends Fragment {
         binding = FragmentTabellaBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
 
-        Button btn8 = binding.btn8;
-        Button btn9 = binding.btn9;
+        Button btnShowTable1 = binding.btn8;
+        Button btnShowTable2 = binding.btn9;
 
-        btn8.setOnClickListener(v -> {
-            // A btn8 gombra kattintva történő művelet
-            Log.d("TabellaFragment", "Button 8 clicked");
-
-        });
-
-        btn9.setOnClickListener(v -> {
-            // A btn9 gombra kattintva történő művelet
-            Log.d("TabellaFragment", "Button 9 clicked");
-        });
-
-        tableLayout = view.findViewById(R.id.teamTableLayout);
+        tableLayout1 = view.findViewById(R.id.teamTableLayout1);
+        tableLayout2 = view.findViewById(R.id.teamTableLayout2);
         databaseHelper = new DatabaseHelper(getContext());
 
-        loadTableData();
+        // Gombok eseménykezelői, teszt Log.d-vel
+        btnShowTable1.setOnClickListener(v -> {
+            Log.d("BUTTON_CLICK", "btn8 (MB1) clicked");
+            showTable(1); // Az első táblázatot mutatjuk
+        });
+
+        btnShowTable2.setOnClickListener(v -> {
+            Log.d("BUTTON_CLICK", "btn9 (Euroleague) clicked");
+            showTable(2); // A második táblázatot mutatjuk
+        });
+
+        // Alapértelmezett táblázat megjelenítése
+        showTable(1);
+
+        // Adatok betöltése mindkét táblához
+        loadTeamsTable(tableLayout1);         // This loads 'teams' table
+        loadEuroleagueTable(tableLayout2);    // This loads 'euroleague' table
+
         return view;
     }
 
-    private void loadTableData() {
-        Cursor cursor = databaseHelper.getAllTeams();
+    private void showTable(int tableNumber) {
+        if (tableNumber == 1) {
+            tableLayout1.setVisibility(View.VISIBLE);
+            tableLayout2.setVisibility(View.GONE);
+        } else {
+            tableLayout1.setVisibility(View.GONE);
+            tableLayout2.setVisibility(View.VISIBLE);
+        }
+    }
 
+    private void loadTeamsTable(TableLayout tableLayout) {
+        Cursor cursor = databaseHelper.getAllTeamsFromTeamsTable();
+        loadCursorIntoTable(tableLayout, cursor);
+    }
+
+    private void loadEuroleagueTable(TableLayout tableLayout) {
+        Cursor cursor = databaseHelper.getAllTeamsFromEuroleague();
+        loadCursorIntoTable(tableLayout, cursor);
+    }
+
+    private void loadCursorIntoTable(TableLayout tableLayout, Cursor cursor) {
         if (cursor != null && cursor.getCount() > 0) {
             int index = 1;
             while (cursor.moveToNext()) {
@@ -66,10 +91,10 @@ public class TabellaFragment extends Fragment {
                 tableRow.addView(createCell(String.valueOf(cursor.getInt(cursor.getColumnIndexOrThrow("wins")))));
                 tableRow.addView(createCell(String.valueOf(cursor.getInt(cursor.getColumnIndexOrThrow("losses")))));
 
-
                 tableLayout.addView(tableRow);
                 index++;
             }
+            cursor.close();
         } else {
             Log.d("DASHBOARD", "No data found in the database.");
         }
