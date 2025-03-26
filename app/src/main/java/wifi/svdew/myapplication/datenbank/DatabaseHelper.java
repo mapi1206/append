@@ -10,17 +10,16 @@ import android.util.Log;
 public class DatabaseHelper extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "teams.db";
-    private static final int DATABASE_VERSION = 9; // Frissített verziószám
+    private static final int DATABASE_VERSION = 12; // Frissített verziószám!
 
-    private static final String TABLE_EUROLEAGUE = "euroleague"; // Euroleague tábla neve
-    private static final String TABLE_TEAMS = "teams"; // Teams tábla neve
+    private static final String TABLE_EUROLEAGUE = "euroleague";
+    private static final String TABLE_TEAMS = "teams";
     private static final String COLUMN_ID = "id";
     private static final String COLUMN_TEAM_NAME = "team_name";
     private static final String COLUMN_WINS = "wins";
     private static final String COLUMN_LOSSES = "losses";
     private static final String COLUMN_MATCHES = "matches";
 
-    // SQL parancsok a táblák létrehozásához
     private static final String CREATE_TABLE_EUROLEAGUE = "CREATE TABLE " + TABLE_EUROLEAGUE + " ("
             + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
             + COLUMN_TEAM_NAME + " TEXT NOT NULL, "
@@ -41,52 +40,56 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
+        Log.d("DatabaseHelper", "onCreate called!");
         db.execSQL(CREATE_TABLE_EUROLEAGUE);
-        db.execSQL(CREATE_TABLE_TEAMS);  // Create teams table
+        db.execSQL(CREATE_TABLE_TEAMS);
 
-        // Manually insert the first team "Real Madrid" with 12 wins, 2 losses, and 14 matches
-        insertTeam(db, "Real Madrid", 12, 2, 14); // Insert into teams table
+        insertTeam(db, "Real Madrid", 12, 2, 14);
+        insertTeam(db, "Barcelona", 10, 5, 15);
 
-        // Manually insert the second team "Barcelona" with 10 wins, 5 losses, and 15 matches into teams table
-        insertTeam(db, "Barcelona", 10, 5, 15); // Insert into teams table
-
-        // Insert teams into the euroleague table
-        insertTeamToEuroleague(db, "Real Madrid", 12, 2, 14);  // Insert into euroleague table
-        insertTeamToEuroleague(db, "Barcelona", 10, 5, 15);   // Insert into euroleague table
+        insertTeamToEuroleague(db, "Real Madrid", 12, 2, 14);
+        insertTeamToEuroleague(db, "Barcelona", 10, 5, 15);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        if (oldVersion < 9) {
-        db.execSQL("CREATE TABLE IF NOT EXISTS " + TABLE_EUROLEAGUE + " ("
-                + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
-                + COLUMN_TEAM_NAME + " TEXT NOT NULL, "
-                + COLUMN_WINS + " INTEGER DEFAULT 0, "
-                + COLUMN_LOSSES + " INTEGER DEFAULT 0, "
-                + COLUMN_MATCHES + " INTEGER DEFAULT 0);");
+        Log.d("DatabaseHelper", "onUpgrade called! OldVersion: " + oldVersion + ", NewVersion: " + newVersion);
 
-        db.execSQL("CREATE TABLE IF NOT EXISTS " + TABLE_TEAMS + " ("
-                + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
-                + COLUMN_TEAM_NAME + " TEXT NOT NULL, "
-                + COLUMN_WINS + " INTEGER DEFAULT 0, "
-                + COLUMN_LOSSES + " INTEGER DEFAULT 0, "
-                + COLUMN_MATCHES + " INTEGER DEFAULT 0);");
-        }
+        // Csak az euroleague tábla törlődik és jön létre újra
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_EUROLEAGUE);
+        db.execSQL(CREATE_TABLE_EUROLEAGUE);
+
+        // Újra feltöltjük az euroleague táblát a 2024-25 szezon adataival
+        insertTeamToEuroleague(db, "Olympiakos Piraeus", 22, 8, 30);
+        insertTeamToEuroleague(db, "Fenerbahçe Beko Istanbul", 20, 10, 30);
+        insertTeamToEuroleague(db, "Panathinaikos AKTOR Athens", 19, 11, 30);
+        insertTeamToEuroleague(db, "AS Monaco", 18, 12, 30);
+        insertTeamToEuroleague(db, "FC Barcelona", 17, 13, 30);
+        insertTeamToEuroleague(db, "Crvena Zvezda Meridianbet Belgrade", 17, 13, 30);
+        insertTeamToEuroleague(db, "Paris Basketball", 17, 13, 30);
+        insertTeamToEuroleague(db, "FC Bayern München", 17, 13, 30);
+        insertTeamToEuroleague(db, "Anadolu Efes Istanbul", 16, 14, 30);
+        insertTeamToEuroleague(db, "Real Madrid", 16, 14, 30);
+        insertTeamToEuroleague(db, "EA7 Emporio Armani Milano", 16, 14, 30);
+        insertTeamToEuroleague(db, "Partizan Mozzart Bet Belgrade", 15, 15, 30);
+        insertTeamToEuroleague(db, "Žalgiris Kaunas", 14, 16, 30);
+        insertTeamToEuroleague(db, "Cazoo Baskonia Vitoria-Gasteiz", 13, 17, 30);
+        insertTeamToEuroleague(db, "LDLC ASVEL Villeurbanne", 11, 19, 30);
+        insertTeamToEuroleague(db, "Maccabi Playtika Tel Aviv", 10, 20, 30);
+        insertTeamToEuroleague(db, "Virtus Segafredo Bologna", 7, 23, 30);
+        insertTeamToEuroleague(db, "Alba Berlin", 5, 25, 30);
     }
 
-    // Method to get all teams from the euroleague
     public Cursor getAllTeamsFromEuroleague() {
         SQLiteDatabase db = this.getReadableDatabase();
         return db.rawQuery("SELECT * FROM " + TABLE_EUROLEAGUE + " ORDER BY " + COLUMN_WINS + " DESC", null);
     }
 
-    // Method to get all teams from the teams table
     public Cursor getAllTeamsFromTeamsTable() {
         SQLiteDatabase db = this.getReadableDatabase();
         return db.rawQuery("SELECT * FROM " + TABLE_TEAMS + " ORDER BY " + COLUMN_WINS + " DESC", null);
     }
 
-    // Method to insert a team into the teams table
     public void insertTeam(SQLiteDatabase db, String teamName, int wins, int losses, int matches) {
         ContentValues values = new ContentValues();
         values.put(COLUMN_TEAM_NAME, teamName);
@@ -94,8 +97,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(COLUMN_LOSSES, losses);
         values.put(COLUMN_MATCHES, matches);
 
-        long result = db.insert(TABLE_TEAMS, null, values); // Insert the team into the teams table
-
+        long result = db.insert(TABLE_TEAMS, null, values);
         if (result == -1) {
             Log.e("DatabaseHelper", "Failed to insert team: " + teamName);
         } else {
@@ -103,7 +105,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
     }
 
-    // Method to insert a team into the euroleague table
     public void insertTeamToEuroleague(SQLiteDatabase db, String teamName, int wins, int losses, int matches) {
         ContentValues values = new ContentValues();
         values.put(COLUMN_TEAM_NAME, teamName);
@@ -111,8 +112,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(COLUMN_LOSSES, losses);
         values.put(COLUMN_MATCHES, matches);
 
-        long result = db.insert(TABLE_EUROLEAGUE, null, values); // Insert the team into euroleague table
-
+        long result = db.insert(TABLE_EUROLEAGUE, null, values);
         if (result == -1) {
             Log.e("DatabaseHelper", "Failed to insert team into euroleague: " + teamName);
         } else {
