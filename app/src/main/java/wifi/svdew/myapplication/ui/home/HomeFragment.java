@@ -1,8 +1,10 @@
 package wifi.svdew.myapplication.ui.home;
 
+
 import android.annotation.SuppressLint;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,15 +17,31 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import com.kwabenaberko.newsapilib.models.Article;
+import com.kwabenaberko.newsapilib.models.response.ArticleResponse;
 
+
+import java.util.List;
+
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 import wifi.svdew.myapplication.R;
 import wifi.svdew.myapplication.datenbank.DatabaseHelper;
+import wifi.svdew.myapplication.ui.news.ApiClient;
+import wifi.svdew.myapplication.ui.news.NewsApiInterface;
+import wifi.svdew.myapplication.ui.news.NewsRecycleAdapter;
 
 public class HomeFragment extends Fragment {
 
     private LinearLayout tableContainer;
     private LinearLayout newsContainer;
     private DatabaseHelper dbHelper;
+
+    private static final String API_KEY = "f58a9be9e97c4238993864b43e768db1";
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -47,7 +65,6 @@ public class HomeFragment extends Fragment {
     }
 
     private void loadTables() {
-        // Itt 2 minta "mini" táblát töltünk be
         for (int t = 1; t <= 2; t++) {
             TableLayout table = new TableLayout(requireContext());
             table.setStretchAllColumns(true);
@@ -62,7 +79,6 @@ public class HomeFragment extends Fragment {
             header.addView(makeCell("L", true));
             table.addView(header);
 
-            // Itt jöhetne DB-ből is, most minta adatok
             for (int i = 0; i < 3; i++) {
                 TableRow row = new TableRow(requireContext());
                 row.addView(makeCell(String.valueOf(i + 1), false));
@@ -79,35 +95,33 @@ public class HomeFragment extends Fragment {
 
     @SuppressLint("SetTextI18n")
     private void loadTopNews() {
-        // Itt 6 hír jelenik meg (később DB-ből lehet)
-        for (int i = 1; i <= 6; i++) {
-            LinearLayout newsItem = new LinearLayout(requireContext());
-            newsItem.setOrientation(LinearLayout.VERTICAL);
-            newsItem.setPadding(24, 16, 24, 16);
+        RecyclerView recyclerView = new RecyclerView(requireContext());
+        recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
+        recyclerView.setNestedScrollingEnabled(false);
 
-            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
-                    ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-            params.setMargins(0, 0, 0, 24);
-            newsItem.setLayoutParams(params);
-            newsItem.setBackgroundResource(R.drawable.button_white_border); // fehér keret
+        NewsApiInterface apiInterface = ApiClient.getRetrofitInstance().create(NewsApiInterface.class);
 
-            TextView title = new TextView(requireContext());
-            title.setText("Hír címe " + i);
-            title.setTextColor(Color.WHITE);
-            title.setTextSize(16);
-            title.setTextAlignment(View.TEXT_ALIGNMENT_TEXT_START);
-            newsItem.addView(title);
+        Call<ArticleResponse> call = apiInterface.getTopHeadlines("general", null, "en", API_KEY);
+        call.enqueue(new Callback<ArticleResponse>() {
+            @Override
+            public void onResponse(@NonNull Call<ArticleResponse> call, @NonNull Response<ArticleResponse> response) {
+                if (response.body() != null && response.body().getArticles() != null) {
+                    List<Article> allArticles = response.body().getArticles();
+                    List<Article> topArticles = allArticles.size() > 6 ? allArticles.subList(0, 6) : allArticles;
 
-            TextView content = new TextView(requireContext());
-            content.setText("Ez egy rövid hírleírás, csak tesztszöveg.");
-            content.setTextColor(Color.LTGRAY);
-            content.setTextSize(14);
-            content.setPadding(0, 8, 0, 0);
-            newsItem.addView(content);
+                    NewsRecycleAdapter adapter = new NewsRecycleAdapter(topArticles);
+                    recyclerView.setAdapter(adapter);
+                    newsContainer.addView(recyclerView);
+                }
+            }
 
-            newsContainer.addView(newsItem);
-        }
+            @Override
+            public void onFailure(@NonNull Call<ArticleResponse> call, @NonNull Throwable t) {
+                Log.e("HomeFragment", "Hírek betöltése sikertelen", t);
+            }
+        });
     }
+
 
     private TextView makeCell(String text, boolean header) {
         TextView tv = new TextView(requireContext());

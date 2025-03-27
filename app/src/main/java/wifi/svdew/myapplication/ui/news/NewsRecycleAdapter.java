@@ -37,11 +37,21 @@ public class NewsRecycleAdapter extends RecyclerView.Adapter<NewsRecycleAdapter.
         Article article = articleList.get(position);
         holder.titleTextView.setText(article.getTitle());
         holder.sourceTextView.setText(article.getSource().getName());
-        Picasso.get().load(article.getUrlToImage())
-                .error(R.drawable.baseline_newspaper_24)
-                .placeholder(R.drawable.baseline_newspaper_24)
-                .into(holder.imageView);
 
+        // Kép betöltés biztonságosan
+        if (article.getUrlToImage() != null && !article.getUrlToImage().isEmpty()) {
+            Picasso.get()
+                    .load(article.getUrlToImage())
+                    .resize(600, 400)         // max méret, hogy ne legyen túl nagy bitmap
+                    .centerCrop()             // hogy szépen illeszkedjen
+                    .error(R.drawable.baseline_newspaper_24)
+                    .placeholder(R.drawable.baseline_newspaper_24)
+                    .into(holder.imageView);
+        } else {
+            holder.imageView.setImageResource(R.drawable.baseline_newspaper_24);
+        }
+
+        // Teljes hír megnyitása kattintásra
         holder.itemView.setOnClickListener(v -> {
             Intent intent = new Intent(v.getContext(), NewsFullActivity.class);
             intent.putExtra("url", article.getUrl());
