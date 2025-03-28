@@ -18,4 +18,9 @@
     <string name="m">M</string>
     <string name="gy">Gy</string>
     <string name="v">V</string>
+    <string name="story_1">Story 1</string>
+    <string name="story_2">Story 2</string>
+    <string name="tables">Tables</string>
+    <string name="news">News</string>
+    <string name="more">More</string>
 </resources>
