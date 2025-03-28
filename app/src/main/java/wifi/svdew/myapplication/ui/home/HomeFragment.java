@@ -108,7 +108,7 @@ public class HomeFragment extends Fragment {
             tableLayouts.add(table);
         }
 
-        tablePager.setAdapter(new RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+        tablePager.setAdapter(new RecyclerView.Adapter<>() {
             @NonNull
             @Override
             public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -117,7 +117,8 @@ public class HomeFragment extends Fragment {
                         ViewGroup.LayoutParams.MATCH_PARENT,
                         ViewGroup.LayoutParams.MATCH_PARENT
                 ));
-                return new RecyclerView.ViewHolder(frame) {};
+                return new RecyclerView.ViewHolder(frame) {
+                };
             }
 
             @Override

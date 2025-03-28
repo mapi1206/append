@@ -34,7 +34,7 @@
                     android:layout_height="72dp"
                     android:layout_marginEnd="12dp"
                     android:background="@drawable/story_circle"
-                    android:contentDescription="Story 1" />
+                    android:contentDescription="@string/story_1" />
 
                 <Button
                     android:id="@+id/story2"
@@ -42,7 +42,7 @@
                     android:layout_height="72dp"
                     android:layout_marginEnd="12dp"
                     android:background="@drawable/story_circle"
-                    android:contentDescription="Story 2" />
+                    android:contentDescription="@string/story_2" />
 
                 <!-- További karikák -->
             </LinearLayout>
@@ -50,7 +50,7 @@
 
         <!-- KÖZÉP: Táblázatok (horizontal scroll) -->
         <TextView
-            android:text="Tables"
+            android:text="@string/tables"
             android:textStyle="bold"
             android:textSize="18sp"
             android:textColor="@android:color/white"
@@ -80,7 +80,7 @@
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
-                android:text="News"
+                android:text="@string/news"
                 android:textColor="@android:color/white"
                 android:textStyle="bold"
                 android:textSize="18sp" />
@@ -89,7 +89,7 @@
                 android:id="@+id/moreNewsButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="More"
+                android:text="@string/more"
                 android:textColor="@android:color/white"
                 android:background="@drawable/button_white_border"
                 android:textStyle="bold"

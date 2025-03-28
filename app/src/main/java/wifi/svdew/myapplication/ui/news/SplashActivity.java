@@ -21,6 +21,6 @@ public class SplashActivity extends AppCompatActivity {
                 transaction.replace(R.id.fragment_container, fragment);
                 transaction.commit();
             }
-        }, 3000); // 3 másodperc késleltetés
+        }, 3000);
     }
 }
