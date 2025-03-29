@@ -14,12 +14,13 @@
         android:orientation="vertical"
         android:padding="12dp">
 
-        <!-- FELSŐ: Insta-sztori karikák -->
+        <!-- Insta-sztori karikák -->
         <HorizontalScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:overScrollMode="never"
-            android:scrollbars="none">
+            android:scrollbars="none"
+            android:layout_marginTop="43dp">
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -48,7 +49,7 @@
             </LinearLayout>
         </HorizontalScrollView>
 
-        <!-- KÖZÉP: Táblázatok (horizontal scroll) -->
+        <!-- Táblázatok (horizontal scroll) -->
         <TextView
             android:text="@string/tables"
             android:textStyle="bold"
@@ -66,7 +67,7 @@
             android:layout_marginBottom="16dp"
             android:orientation="horizontal" />
 
-        <!-- ALUL: News blokk -->
+        <!-- News blokk -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
