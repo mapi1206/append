@@ -15,50 +15,43 @@
         android:padding="12dp">
 
         <!-- Insta-sztori karikák -->
-        <HorizontalScrollView
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/topButtonRecycler"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_marginTop="43dp"
+            android:orientation="horizontal"
+            android:overScrollMode="never" />
+
+        <!-- Táblázatok szekció -->
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:overScrollMode="never"
-            android:scrollbars="none"
-            android:layout_marginTop="43dp">
+            android:orientation="horizontal"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="8dp"
+            android:gravity="center_vertical">
 
-            <LinearLayout
+            <TextView
+                android:id="@+id/tableTitle"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="@string/tables"
+                android:textColor="@android:color/white"
+                android:textStyle="bold"
+                android:textSize="18sp" />
+
+            <Button
+                android:id="@+id/moreTablesButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:paddingVertical="8dp"
-                android:gravity="center_vertical">
-
-                <Button
-                    android:id="@+id/story1"
-                    android:layout_width="72dp"
-                    android:layout_height="72dp"
-                    android:layout_marginEnd="12dp"
-                    android:background="@drawable/story_circle"
-                    android:contentDescription="@string/story_1" />
-
-                <Button
-                    android:id="@+id/story2"
-                    android:layout_width="72dp"
-                    android:layout_height="72dp"
-                    android:layout_marginEnd="12dp"
-                    android:background="@drawable/story_circle"
-                    android:contentDescription="@string/story_2" />
-
-                <!-- További karikák -->
-            </LinearLayout>
-        </HorizontalScrollView>
-
-        <!-- Táblázatok (horizontal scroll) -->
-        <TextView
-            android:text="@string/tables"
-            android:textStyle="bold"
-            android:textSize="18sp"
-            android:textColor="@android:color/white"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:layout_marginBottom="8dp" />
+                android:text="@string/more"
+                android:textColor="@android:color/white"
+                android:background="@drawable/button_white_border"
+                android:textStyle="bold"
+                android:paddingHorizontal="12dp" />
+        </LinearLayout>
 
         <androidx.viewpager2.widget.ViewPager2
             android:id="@+id/tablePager"

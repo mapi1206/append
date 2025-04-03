@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TableLayout;
 import android.widget.TableRow;
@@ -23,6 +24,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.widget.ViewPager2;
 
+import com.bumptech.glide.Glide;
 import com.kwabenaberko.newsapilib.models.Article;
 import com.kwabenaberko.newsapilib.models.response.ArticleResponse;
 
@@ -56,6 +58,10 @@ public class HomeFragment extends Fragment {
         tablePager = view.findViewById(R.id.tablePager);
         newsContainer = view.findViewById(R.id.newsContainer);
 
+        RecyclerView topButtonRecycler = view.findViewById(R.id.topButtonRecycler);
+        topButtonRecycler.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+        loadMockTopButtons(topButtonRecycler);
+
         loadTables();
         loadTopNews();
 
@@ -66,6 +72,15 @@ public class HomeFragment extends Fragment {
                     .build();
             NavHostFragment.findNavController(HomeFragment.this)
                     .navigate(R.id.navigation_notifications, null, navOptions);
+        });
+
+        Button moreTablesButton = view.findViewById(R.id.moreTablesButton);
+        moreTablesButton.setOnClickListener(v -> {
+            NavOptions navOptions = new NavOptions.Builder()
+                    .setPopUpTo(R.id.navigation_home, true)
+                    .build();
+        NavHostFragment.findNavController(HomeFragment.this)
+                    .navigate(R.id.navigation_dashboard, null, navOptions);
         });
     }
 
@@ -162,6 +177,27 @@ public class HomeFragment extends Fragment {
                 Log.e("HomeFragment", "Hírek betöltése sikertelen", t);
             }
         });
+    }
+
+    private void loadMockTopButtons(RecyclerView recyclerView) {
+        List<Team> mockTeams = new ArrayList<>();
+        mockTeams.add(new Team(1, "Egis Körend", "https://upload.wikimedia.org/wikipedia/en/d/d3/Körmendi_KC_logo.png" , "https://www.proballers.com/media/cache/resize_600_png/https---www.proballers.com/ul/player/ferencz-csaba-1f00347f-380f-6de2-b278-8da28cb2205e.png"));
+        mockTeams.add(new Team(2, "Szolnoki Olajbányász", "https://upload.wikimedia.org/wikipedia/en/a/af/Szolnoki_Olajbányász_KK_logo.png", "https://i.imgur.com/tGbaZCY.jpg"));
+        mockTeams.add(new Team(3, "AS Monaco", "https://upload.wikimedia.org/wikipedia/en/d/d5/AS_Monaco_Basket_Logo.png", "https://upload.wikimedia.org/wikipedia/commons/c/c6/Mike_James_%28basketball%2C_born_1990%29_55_AS_Monaco_Basket_EuroLeague_20241212_%286%29_%28cropped%29.jpg"));
+        TeamButtonAdapter adapter = new TeamButtonAdapter(mockTeams, team -> {
+            showFullScreenImage(team.getPlayerImageUrl());
+        });
+        recyclerView.setAdapter(adapter);
+    }
+
+    private void showFullScreenImage(String imageUrl) {
+        androidx.appcompat.app.AlertDialog.Builder builder = new androidx.appcompat.app.AlertDialog.Builder(requireContext(), android.R.style.Theme_Black_NoTitleBar_Fullscreen);
+        ImageView imageView = new ImageView(requireContext());
+        imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
+        Glide.with(requireContext()).load(imageUrl).into(imageView);
+        builder.setView(imageView);
+        builder.setCancelable(true);
+        builder.show();
     }
 
     private TextView makeCell(String text, boolean header) {
