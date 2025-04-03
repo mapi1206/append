@@ -55,4 +55,8 @@ public class Team implements Parcelable {
     public String getName() {
         return name;
     }
+
+    public String getLogo() {
+        return logoUrl;
+    }
 }

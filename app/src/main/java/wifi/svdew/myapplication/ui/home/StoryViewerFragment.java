@@ -1,17 +1,25 @@
 package wifi.svdew.myapplication.ui.home;
 
+import android.animation.ObjectAnimator;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.viewpager2.widget.ViewPager2;
+
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -21,6 +29,11 @@ public class StoryViewerFragment extends Fragment {
 
     private ArrayList<Team> teamList;
     private int startIndex;
+    private Handler handler = new Handler(Looper.getMainLooper());
+    private Runnable storyRunnable;
+    private ObjectAnimator animator;
+    private ProgressBar progressBar;
+    private ViewPager2 viewPager;
 
     @Nullable
     @Override
@@ -32,8 +45,14 @@ public class StoryViewerFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        ViewPager2 viewPager = view.findViewById(R.id.storyViewPager);
+        if (((AppCompatActivity) requireActivity()).getSupportActionBar() != null) {
+            ((AppCompatActivity) requireActivity()).getSupportActionBar().hide();
+        }
+
+        viewPager = view.findViewById(R.id.storyViewPager);
+        progressBar = view.findViewById(R.id.storyProgressBar);
         TextView teamNameText = view.findViewById(R.id.teamNameText);
+        ImageView teamLogoImage = view.findViewById(R.id.teamLogoImage);
         ImageButton closeButton = view.findViewById(R.id.closeButton);
 
         Bundle args = getArguments();
@@ -48,10 +67,18 @@ public class StoryViewerFragment extends Fragment {
             viewPager.setCurrentItem(startIndex, false);
             teamNameText.setText(teamList.get(startIndex).getName());
 
+            String logoUrl = teamList.get(startIndex).getLogo();
+            Picasso.get().load(logoUrl).into(teamLogoImage);
+
+            startStoryTimer(startIndex);
+
             viewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
                 @Override
                 public void onPageSelected(int position) {
                     teamNameText.setText(teamList.get(position).getName());
+                    String updatedLogo = teamList.get(position).getLogo();
+                    Picasso.get().load(updatedLogo).into(teamLogoImage);
+                    startStoryTimer(position);
                 }
             });
         }
@@ -59,5 +86,36 @@ public class StoryViewerFragment extends Fragment {
         closeButton.setOnClickListener(v ->
                 NavHostFragment.findNavController(StoryViewerFragment.this).popBackStack()
         );
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        if (((AppCompatActivity) requireActivity()).getSupportActionBar() != null) {
+            ((AppCompatActivity) requireActivity()).getSupportActionBar().show();
+        }
+    }
+
+    private void startStoryTimer(int position) {
+        if (!isAdded()) return;
+        if (animator != null) animator.cancel();
+        if (storyRunnable != null) handler.removeCallbacks(storyRunnable);
+
+        progressBar.setProgress(0);
+        animator = ObjectAnimator.ofInt(progressBar, "progress", 0, 1000);
+        animator.setDuration(8000);
+        animator.start();
+
+        storyRunnable = () -> {
+            if (!isAdded()) return;
+            int nextItem = position + 1;
+            if (nextItem < teamList.size()) {
+                viewPager.setCurrentItem(nextItem, true);
+            } else {
+                NavHostFragment.findNavController(StoryViewerFragment.this)
+                        .navigate(R.id.action_storyViewerFragment_to_navigation_home);
+            }
+        };
+        handler.postDelayed(storyRunnable, 8000);
     }
 }

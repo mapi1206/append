@@ -10,7 +10,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.FrameLayout;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TableLayout;
 import android.widget.TableRow;
@@ -20,16 +19,14 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.NavOptions;
-import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.widget.ViewPager2;
 
-import com.bumptech.glide.Glide;
+
 import com.kwabenaberko.newsapilib.models.Article;
 import com.kwabenaberko.newsapilib.models.response.ArticleResponse;
-import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -202,16 +199,6 @@ public class HomeFragment extends Fragment {
             navController.navigate(R.id.action_navigation_home_to_storyViewerFragment, args);
         });
         recyclerView.setAdapter(adapter);
-    }
-
-    private void showFullScreenImage(String imageUrl) {
-        androidx.appcompat.app.AlertDialog.Builder builder = new androidx.appcompat.app.AlertDialog.Builder(requireContext(), android.R.style.Theme_Black_NoTitleBar_Fullscreen);
-        ImageView imageView = new ImageView(requireContext());
-        imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
-        Picasso.get().load(imageUrl).into(imageView);
-        builder.setView(imageView);
-        builder.setCancelable(true);
-        builder.show();
     }
 
     private TextView makeCell(String text, boolean header) {

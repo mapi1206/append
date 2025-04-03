@@ -33,5 +33,10 @@
         android:id="@+id/storyViewerFragment"
         android:name="wifi.svdew.myapplication.ui.home.StoryViewerFragment"
         android:label="StoryViewerFragment"
-        tools:layout="@layout/fragment_story_viewer" />
+        tools:layout="@layout/fragment_story_viewer">
+
+        <action
+            android:id="@+id/action_storyViewerFragment_to_navigation_home"
+            app:destination="@id/navigation_home" />
+    </fragment>
 </navigation>
