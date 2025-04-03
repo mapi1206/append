@@ -6,10 +6,10 @@ import android.os.Parcelable;
 public class Team implements Parcelable {
     public int id;
     public String name;
-    public String logoUrl;
+    public int logoUrl;
     public int playerImageUrl;
 
-    public Team(int id, String name, String logoUrl, int playerImageUrl) {
+    public Team(int id, String name, int logoUrl, int playerImageUrl) {
         this.id = id;
         this.name = name;
         this.logoUrl = logoUrl;
@@ -19,7 +19,7 @@ public class Team implements Parcelable {
     protected Team(Parcel in) {
         id = in.readInt();
         name = in.readString();
-        logoUrl = in.readString();
+        logoUrl = in.readInt();
         playerImageUrl = in.readInt();
     }
 
@@ -44,7 +44,7 @@ public class Team implements Parcelable {
     public void writeToParcel(Parcel parcel, int i) {
         parcel.writeInt(id);
         parcel.writeString(name);
-        parcel.writeString(logoUrl);
+        parcel.writeInt(logoUrl);
         parcel.writeInt(playerImageUrl);
     }
 
@@ -56,7 +56,7 @@ public class Team implements Parcelable {
         return name;
     }
 
-    public String getLogo() {
-        return logoUrl;
+    public int getLogo() {
+        return logoUrl;  // Now returns the drawable resource ID for the logo
     }
 }

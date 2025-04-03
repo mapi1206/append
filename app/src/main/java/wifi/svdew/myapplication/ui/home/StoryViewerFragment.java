@@ -75,7 +75,7 @@ public class StoryViewerFragment extends Fragment {
                 @Override
                 public void onPageSelected(int position) {
                     teamNameText.setText(teamList.get(position).getName());
-                    teamLogoImage.setImageResource(teamList.get(position).getPlayerImageUrl());
+                    teamLogoImage.setImageResource(teamList.get(position).getLogo());  // Replace with getLogo() for the team logo
                     startStoryTimer(position);
                 }
             });
