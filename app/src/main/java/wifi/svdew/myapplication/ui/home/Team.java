@@ -7,9 +7,9 @@ public class Team implements Parcelable {
     public int id;
     public String name;
     public String logoUrl;
-    public String playerImageUrl;
+    public int playerImageUrl;
 
-    public Team(int id, String name, String logoUrl, String playerImageUrl) {
+    public Team(int id, String name, String logoUrl, int playerImageUrl) {
         this.id = id;
         this.name = name;
         this.logoUrl = logoUrl;
@@ -20,7 +20,7 @@ public class Team implements Parcelable {
         id = in.readInt();
         name = in.readString();
         logoUrl = in.readString();
-        playerImageUrl = in.readString();
+        playerImageUrl = in.readInt();
     }
 
     public static final Creator<Team> CREATOR = new Creator<Team>() {
@@ -45,10 +45,10 @@ public class Team implements Parcelable {
         parcel.writeInt(id);
         parcel.writeString(name);
         parcel.writeString(logoUrl);
-        parcel.writeString(playerImageUrl);
+        parcel.writeInt(playerImageUrl);
     }
 
-    public String getPlayerImageUrl() {
+    public int getPlayerImageUrl() {
         return playerImageUrl;
     }
 

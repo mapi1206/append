@@ -67,8 +67,7 @@ public class StoryViewerFragment extends Fragment {
             viewPager.setCurrentItem(startIndex, false);
             teamNameText.setText(teamList.get(startIndex).getName());
 
-            String logoUrl = teamList.get(startIndex).getLogo();
-            Picasso.get().load(logoUrl).into(teamLogoImage);
+            teamLogoImage.setImageResource(teamList.get(startIndex).getPlayerImageUrl());
 
             startStoryTimer(startIndex);
 
@@ -76,8 +75,7 @@ public class StoryViewerFragment extends Fragment {
                 @Override
                 public void onPageSelected(int position) {
                     teamNameText.setText(teamList.get(position).getName());
-                    String updatedLogo = teamList.get(position).getLogo();
-                    Picasso.get().load(updatedLogo).into(teamLogoImage);
+                    teamLogoImage.setImageResource(teamList.get(position).getPlayerImageUrl());
                     startStoryTimer(position);
                 }
             });

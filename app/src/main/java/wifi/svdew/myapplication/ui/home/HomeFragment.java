@@ -179,15 +179,15 @@ public class HomeFragment extends Fragment {
 
     private void loadMockTopButtons(RecyclerView recyclerView) {
         List<Team> mockTeams = new ArrayList<>();
-        mockTeams.add(new Team(1, "Egis Körmend", "https://upload.wikimedia.org/wikipedia/en/d/d3/Körmendi_KC_logo.png", "https://i.imgur.com/IwzKHc2.jpg"));
-        mockTeams.add(new Team(2, "Szolnoki Olajbányász", "https://upload.wikimedia.org/wikipedia/en/a/af/Szolnoki_Olajbányász_KK_logo.png", "https://i.imgur.com/Kg2OYWa.jpg"));
-        mockTeams.add(new Team(3, "AS Monaco", "https://upload.wikimedia.org/wikipedia/en/d/d5/AS_Monaco_Basket_Logo.png", "https://i.imgur.com/YBJZTcu.jpg"));
-        mockTeams.add(new Team(4, "Falco", "https://static.szombathelypont.hu/image/2021/09//thax2-falcovulcanoenergiakcszombathely-5cf61f.jpg", "https://i.imgur.com/sXeDsrs.jpg"));
-        mockTeams.add(new Team(5, "Panathinaikos", "https://upload.wikimedia.org/wikipedia/en/2/2b/Panathinaikos_BC_logo.png", "https://i.imgur.com/sXwdzAV.jpg"));
-        mockTeams.add(new Team(6, "Partizan Belgrade", "https://images.seeklogo.com/logo-png/53/1/partizan-logo-png_seeklogo-531300.png", "https://i.imgur.com/FPz8AZv.jpg"));
-        mockTeams.add(new Team(7, "Red Stars Belgrade", "https://upload.wikimedia.org/wikipedia/en/thumb/0/01/KK_Crvena_zvezda_logo.svg/800px-KK_Crvena_zvezda_logo.svg.png", "https://i.imgur.com/1RQSTnt.jpg"));
-        mockTeams.add(new Team(8, "Real Madrid", "https://upload.wikimedia.org/wikipedia/en/b/be/Real_Madrid_Baloncesto.png", "https://i.imgur.com/WUGgQ7O.jpg"));
-        mockTeams.add(new Team(9, "Barcelona", "https://images.seeklogo.com/logo-png/35/1/fc-barcelona-basketball-logo-png_seeklogo-352154.png?v=1955019485352702584", "https://i.imgur.com/HhwjzAz.jpg"));
+        mockTeams.add(new Team(1, "Egis Körmend", "https://upload.wikimedia.org/wikipedia/en/d/d3/Körmendi_KC_logo.png", R.drawable.kormend));
+        mockTeams.add(new Team(2, "Szolnoki Olajbányász", "https://upload.wikimedia.org/wikipedia/en/a/af/Szolnoki_Olajbányász_KK_logo.png", R.drawable.kormend));
+        mockTeams.add(new Team(3, "AS Monaco", "https://upload.wikimedia.org/wikipedia/en/d/d5/AS_Monaco_Basket_Logo.png", R.drawable.kormend));
+        mockTeams.add(new Team(4, "Falco", "https://static.szombathelypont.hu/image/2021/09//thax2-falcovulcanoenergiakcszombathely-5cf61f.jpg", R.drawable.kormend));
+        mockTeams.add(new Team(5, "Panathinaikos", "https://upload.wikimedia.org/wikipedia/en/2/2b/Panathinaikos_BC_logo.png", R.drawable.kormend));
+        mockTeams.add(new Team(6, "Partizan Belgrade", "https://images.seeklogo.com/logo-png/53/1/partizan-logo-png_seeklogo-531300.png", R.drawable.kormend));
+        mockTeams.add(new Team(7, "Red Stars Belgrade", "https://upload.wikimedia.org/wikipedia/en/thumb/0/01/KK_Crvena_zvezda_logo.svg/800px-KK_Crvena_zvezda_logo.svg.png", R.drawable.kormend));
+        mockTeams.add(new Team(8, "Real Madrid", "https://upload.wikimedia.org/wikipedia/en/b/be/Real_Madrid_Baloncesto.png", R.drawable.kormend));
+        mockTeams.add(new Team(9, "Barcelona", "https://images.seeklogo.com/logo-png/35/1/fc-barcelona-basketball-logo-png_seeklogo-352154.png?v=1955019485352702584", R.drawable.kormend));
 
         TeamButtonAdapter adapter = new TeamButtonAdapter(mockTeams, team -> {
             int position = mockTeams.indexOf(team);
