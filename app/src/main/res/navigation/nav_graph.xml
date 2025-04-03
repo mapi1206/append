@@ -12,6 +12,9 @@
         android:label="Home"
         tools:layout="@layout/fragment_home">
 
+        <action
+            android:id="@+id/action_navigation_home_to_storyViewerFragment"
+            app:destination="@id/storyViewerFragment" />
         <!-- Action: Home → News -->
         <action
             android:id="@+id/action_navigation_home_to_navigation_notifications"
@@ -35,7 +38,9 @@
         android:name="wifi.svdew.myapplication.ui.tabella.TabellaFragment"
         android:label="Tables"
         tools:layout="@layout/fragment_tabella" />
+    <fragment
+        android:id="@+id/storyViewerFragment"
+        android:name="wifi.svdew.myapplication.ui.home.StoryViewerFragment"
+        android:label="StoryViewerFragment"
+        tools:layout="@layout/fragment_story_viewer" />
 </navigation>
-
-
-

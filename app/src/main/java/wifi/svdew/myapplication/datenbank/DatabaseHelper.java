@@ -10,7 +10,7 @@ import android.util.Log;
 public class DatabaseHelper extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "teams.db";
-    private static final int DATABASE_VERSION = 12; // Frissített verziószám!
+    private static final int DATABASE_VERSION = 13; // Frissített verziószám!
 
     private static final String TABLE_EUROLEAGUE = "euroleague";
     private static final String TABLE_TEAMS = "teams";
@@ -55,7 +55,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         Log.d("DatabaseHelper", "onUpgrade called! OldVersion: " + oldVersion + ", NewVersion: " + newVersion);
 
-        // Csak az euroleague tábla törlődik és jön létre újra
+        // Az euroleague táblák törlése és újralétrehozása
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_EUROLEAGUE);
         db.execSQL(CREATE_TABLE_EUROLEAGUE);
 
@@ -78,6 +78,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         insertTeamToEuroleague(db, "Maccabi Playtika Tel Aviv", 10, 20, 30);
         insertTeamToEuroleague(db, "Virtus Segafredo Bologna", 7, 23, 30);
         insertTeamToEuroleague(db, "Alba Berlin", 5, 25, 30);
+
+        // Újra feltöltjük a teams táblát az alapértelmezett adatokkal
+        insertTeam(db, "Real Madrid", 12, 2, 14);
+        insertTeam(db, "Barcelona", 10, 5, 15);
     }
 
     public Cursor getAllTeamsFromEuroleague() {
