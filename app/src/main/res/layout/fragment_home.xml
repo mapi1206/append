@@ -96,6 +96,14 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:layout_marginBottom="12dp" />
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/newsRecycler"
+            android:layout_width="match_parent"
+            android:layout_height="850dp"
+            android:nestedScrollingEnabled="false"
+            android:overScrollMode="never"
+            android:layout_marginBottom="16dp"
+            android:clipToPadding="false"/>
 
     </LinearLayout>
 </ScrollView>

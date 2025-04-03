@@ -56,6 +56,17 @@ public class TabellaFragment extends Fragment {
         loadTeamsTable(tableLayout1);         // This loads 'teams' table
         loadEuroleagueTable(tableLayout2);    // This loads 'euroleague' table
 
+        TextView explanation1 = new TextView(getContext());
+        explanation1.setText("P = Place, G = Games Played, W = Wins, L = Losses");
+        explanation1.setTextColor(Color.WHITE);
+        explanation1.setPadding(16, 16, 16, 16);
+        explanation1.setTextSize(14);
+
+
+
+        ((ViewGroup) tableLayout1.getParent()).addView(explanation1);
+
+
         return view;
     }
 

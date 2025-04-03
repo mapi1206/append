@@ -80,7 +80,7 @@ public class HomeFragment extends Fragment {
                     .setPopUpTo(R.id.navigation_home, true)
                     .build();
         NavHostFragment.findNavController(HomeFragment.this)
-                    .navigate(R.id.navigation_dashboard, null, navOptions);
+                .navigate(R.id.tabella, null, navOptions);
         });
     }
 
@@ -152,7 +152,7 @@ public class HomeFragment extends Fragment {
 
     @SuppressLint("SetTextI18n")
     private void loadTopNews() {
-        RecyclerView recyclerView = new RecyclerView(requireContext());
+        RecyclerView recyclerView = requireView().findViewById(R.id.newsRecycler);
         recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
         recyclerView.setNestedScrollingEnabled(false);
 
@@ -168,7 +168,6 @@ public class HomeFragment extends Fragment {
 
                     NewsRecycleAdapter adapter = new NewsRecycleAdapter(topArticles);
                     recyclerView.setAdapter(adapter);
-                    newsContainer.addView(recyclerView);
                 }
             }
 
@@ -184,6 +183,12 @@ public class HomeFragment extends Fragment {
         mockTeams.add(new Team(1, "Egis Körend", "https://upload.wikimedia.org/wikipedia/en/d/d3/Körmendi_KC_logo.png" , "https://www.proballers.com/media/cache/resize_600_png/https---www.proballers.com/ul/player/ferencz-csaba-1f00347f-380f-6de2-b278-8da28cb2205e.png"));
         mockTeams.add(new Team(2, "Szolnoki Olajbányász", "https://upload.wikimedia.org/wikipedia/en/a/af/Szolnoki_Olajbányász_KK_logo.png", "https://i.imgur.com/tGbaZCY.jpg"));
         mockTeams.add(new Team(3, "AS Monaco", "https://upload.wikimedia.org/wikipedia/en/d/d5/AS_Monaco_Basket_Logo.png", "https://upload.wikimedia.org/wikipedia/commons/c/c6/Mike_James_%28basketball%2C_born_1990%29_55_AS_Monaco_Basket_EuroLeague_20241212_%286%29_%28cropped%29.jpg"));
+        mockTeams.add(new Team(4, "Egis Körend", "https://upload.wikimedia.org/wikipedia/en/d/d3/Körmendi_KC_logo.png" , "https://www.proballers.com/media/cache/resize_600_png/https---www.proballers.com/ul/player/ferencz-csaba-1f00347f-380f-6de2-b278-8da28cb2205e.png"));
+        mockTeams.add(new Team(5, "Szolnoki Olajbányász", "https://upload.wikimedia.org/wikipedia/en/a/af/Szolnoki_Olajbányász_KK_logo.png", "https://i.imgur.com/tGbaZCY.jpg"));
+        mockTeams.add(new Team(6, "AS Monaco", "https://upload.wikimedia.org/wikipedia/en/d/d5/AS_Monaco_Basket_Logo.png", "https://upload.wikimedia.org/wikipedia/commons/c/c6/Mike_James_%28basketball%2C_born_1990%29_55_AS_Monaco_Basket_EuroLeague_20241212_%286%29_%28cropped%29.jpg"));
+        mockTeams.add(new Team(7, "Egis Körend", "https://upload.wikimedia.org/wikipedia/en/d/d3/Körmendi_KC_logo.png" , "https://www.proballers.com/media/cache/resize_600_png/https---www.proballers.com/ul/player/ferencz-csaba-1f00347f-380f-6de2-b278-8da28cb2205e.png"));
+        mockTeams.add(new Team(8, "Szolnoki Olajbányász", "https://upload.wikimedia.org/wikipedia/en/a/af/Szolnoki_Olajbányász_KK_logo.png", "https://i.imgur.com/tGbaZCY.jpg"));
+        mockTeams.add(new Team(9, "AS Monaco", "https://upload.wikimedia.org/wikipedia/en/d/d5/AS_Monaco_Basket_Logo.png", "https://upload.wikimedia.org/wikipedia/commons/c/c6/Mike_James_%28basketball%2C_born_1990%29_55_AS_Monaco_Basket_EuroLeague_20241212_%286%29_%28cropped%29.jpg"));
         TeamButtonAdapter adapter = new TeamButtonAdapter(mockTeams, team -> {
             showFullScreenImage(team.getPlayerImageUrl());
         });
