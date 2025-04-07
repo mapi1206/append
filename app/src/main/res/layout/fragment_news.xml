@@ -48,7 +48,7 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/btn_1"
                 android:layout_margin="6dp"
-                android:text="MINDEN"/>
+                android:text="ALL"/>
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -60,31 +60,31 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/btn_3"
                 android:layout_margin="6dp"
-                android:text="SPORTOK"/>
+                android:text="SPORTS"/>
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/btn_4"
                 android:layout_margin="6dp"
-                android:text="TECHNOLOGIA"/>
+                android:text="TECH"/>
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/btn_5"
                 android:layout_margin="6dp"
-                android:text="EGÉSZSÉG"/>
+                android:text="HEALTH"/>
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/btn_6"
                 android:layout_margin="6dp"
-                android:text="SZÓRAKOZÁS"/>
+                android:text="COMEDY"/>
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/btn_7"
                 android:layout_margin="6dp"
-                android:text="TUDOMÁNYOK"/>
+                android:text="SCIENCE"/>
 
         </LinearLayout>
 
