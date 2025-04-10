@@ -1,5 +1,7 @@
 package wifi.svdew.myapplication.ui.home;
 
+// Fragment to display full-screen image stories with automatic progress and navigation.
+
 import android.animation.ObjectAnimator;
 import android.os.Bundle;
 import android.os.Handler;
@@ -25,22 +27,30 @@ import java.util.ArrayList;
 
 import wifi.svdew.myapplication.R;
 
+// Displays a fullscreen story viewer with team name, logo, and swipeable stories
 public class StoryViewerFragment extends Fragment {
 
+    // List of teams to be shown in the story viewer
     private ArrayList<Team> teamList;
+
+    // Index of the team to start the story from
     private int startIndex;
+
+    // Handler and animation-related components for managing story timer and UI
     private Handler handler = new Handler(Looper.getMainLooper());
     private Runnable storyRunnable;
     private ObjectAnimator animator;
     private ProgressBar progressBar;
     private ViewPager2 viewPager;
 
+    // Inflate the layout for the story viewer fragment
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_story_viewer, container, false);
     }
 
+    // Initialize story UI and set up interactions
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -71,6 +81,7 @@ public class StoryViewerFragment extends Fragment {
 
             startStoryTimer(startIndex);
 
+            // Update team name and logo when page changes, and restart story timer
             viewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
                 @Override
                 public void onPageSelected(int position) {
@@ -81,11 +92,13 @@ public class StoryViewerFragment extends Fragment {
             });
         }
 
+        // Close the story viewer and navigate back
         closeButton.setOnClickListener(v ->
                 NavHostFragment.findNavController(StoryViewerFragment.this).popBackStack()
         );
     }
 
+    // Restore the action bar when the fragment is destroyed
     @Override
     public void onDestroyView() {
         super.onDestroyView();
@@ -94,16 +107,19 @@ public class StoryViewerFragment extends Fragment {
         }
     }
 
+    // Start or restart the timer for the current story, and handle navigation to the next one
     private void startStoryTimer(int position) {
         if (!isAdded()) return;
         if (animator != null) animator.cancel();
         if (storyRunnable != null) handler.removeCallbacks(storyRunnable);
 
+        // Animate the progress bar for the story duration
         progressBar.setProgress(0);
         animator = ObjectAnimator.ofInt(progressBar, "progress", 0, 1000);
         animator.setDuration(8000);
         animator.start();
 
+        // Automatically move to next story after delay, or return home when finished
         storyRunnable = () -> {
             if (!isAdded()) return;
             int nextItem = position + 1;

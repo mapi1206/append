@@ -1,5 +1,6 @@
 package wifi.svdew.myapplication.ui.news;
 
+// Fragment for displaying top news headlines and handling search and category filters
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -30,7 +31,10 @@ import wifi.svdew.myapplication.databinding.FragmentNewsBinding;
 
 public class NewsFragment extends Fragment implements View.OnClickListener {
 
+    // View binding object for accessing UI elements
     private FragmentNewsBinding binding;
+
+    // RecyclerView, adapter, progress indicator, category buttons, and search view
     RecyclerView recyclerView;
     List<Article> articleList = new ArrayList<>();
     NewsRecycleAdapter adapter;
@@ -38,8 +42,10 @@ public class NewsFragment extends Fragment implements View.OnClickListener {
     Button btn1, btn2, btn3, btn4, btn5, btn6, btn7;
     androidx.appcompat.widget.SearchView searchView;
 
+    // API key for accessing the news service
     private static final String API_KEY = "f58a9be9e97c4238993864b43e768db1"; // Az API kulcs
 
+    // Inflate the layout, initialize UI components, and set up listeners
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
@@ -65,7 +71,7 @@ public class NewsFragment extends Fragment implements View.OnClickListener {
         btn6.setOnClickListener(this);
         btn7.setOnClickListener(this);
 
-        // SearchView beállítása
+        // Set listener for search queries
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -85,18 +91,21 @@ public class NewsFragment extends Fragment implements View.OnClickListener {
         return root;
     }
 
+    // Clear binding when view is destroyed
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;
     }
 
+    // Set up the RecyclerView with layout manager and adapter
     void setupRecyclerView() {
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         adapter = new NewsRecycleAdapter(articleList);
         recyclerView.setAdapter(adapter);
     }
 
+    // Show or hide the progress indicator
     void changeInProgress(boolean show) {
         if (show)
             progressIndicator.setVisibility(View.VISIBLE);
@@ -104,6 +113,7 @@ public class NewsFragment extends Fragment implements View.OnClickListener {
             progressIndicator.setVisibility(View.INVISIBLE);
     }
 
+    // Fetch news articles using the News API based on category and query
     void getNews(String category, String query) {
         changeInProgress(true);  // Töltősáv megjelenítése
         NewsApiInterface apiInterface = ApiClient.getRetrofitInstance().create(NewsApiInterface.class);
@@ -113,6 +123,7 @@ public class NewsFragment extends Fragment implements View.OnClickListener {
         call.enqueue(new Callback<ArticleResponse>() {
             @Override
             public void onResponse(Call<ArticleResponse> call, Response<ArticleResponse> response) {
+                // Handle API response on UI thread
                 requireActivity().runOnUiThread(() -> {
                     changeInProgress(false);  // Töltősáv eltűnik
                     if (response.isSuccessful() && response.body() != null) {
@@ -137,12 +148,14 @@ public class NewsFragment extends Fragment implements View.OnClickListener {
 
             @Override
             public void onFailure(Call<ArticleResponse> call, Throwable t) {
+                // Handle API request failure
                 Log.e("NewsApi", "API request failed: " + t.getMessage());
                 changeInProgress(false);  // Töltősáv eltűnik hiba esetén
             }
         });
     }
 
+    // Handle category button clicks
     @Override
     public void onClick(View v) {
         Button btn = (Button) v;

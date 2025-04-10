@@ -7,7 +7,7 @@
     android:orientation="vertical"
     tools:context=".MainActivity">
 
-    <!-- Title TextView from the first XML file -->
+    <!-- Title text displaying the app name -->
     <TextView
         android:id="@+id/text_news"
         android:layout_width="match_parent"
@@ -23,7 +23,7 @@
         android:textColor="@color/white"
         />
 
-    <!-- Horizontal ScrollView with buttons -->
+    <!-- Horizontally scrollable container for category buttons and search view -->
     <HorizontalScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -36,6 +36,7 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
+            <!-- Search bar for querying news articles -->
             <androidx.appcompat.widget.SearchView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -43,42 +44,49 @@
                 android:layout_gravity="center"
                 android:id="@+id/search_view"/>
 
+            <!-- Button for filtering news by ALL -->
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/btn_1"
                 android:layout_margin="6dp"
                 android:text="ALL"/>
+            <!-- Button for filtering news by BUSINESS -->
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/btn_2"
                 android:layout_margin="6dp"
                 android:text="BUSINESS"/>
+            <!-- Button for filtering news by SPORTS -->
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/btn_3"
                 android:layout_margin="6dp"
                 android:text="SPORTS"/>
+            <!-- Button for filtering news by TECH -->
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/btn_4"
                 android:layout_margin="6dp"
                 android:text="TECH"/>
+            <!-- Button for filtering news by HEALTH -->
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/btn_5"
                 android:layout_margin="6dp"
                 android:text="HEALTH"/>
+            <!-- Button for filtering news by COMEDY -->
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/btn_6"
                 android:layout_margin="6dp"
                 android:text="COMEDY"/>
+            <!-- Button for filtering news by SCIENCE -->
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -90,14 +98,14 @@
 
     </HorizontalScrollView>
 
-    <!-- Progress Bar -->
+    <!-- Loading indicator shown while fetching news -->
     <com.google.android.material.progressindicator.LinearProgressIndicator
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:indeterminate="true"
         android:id="@+id/progress_bar"/>
 
-    <!-- Recycler View for News -->
+    <!-- RecyclerView for displaying the list of news articles -->
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <!-- Fullscreen image view for displaying a single story -->
     <ImageView
         android:id="@+id/storyImageView"
         android:layout_width="0dp"

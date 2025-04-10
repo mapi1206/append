@@ -7,37 +7,40 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+// Handles database creation, upgrade, and basic operations for Euroleague and Teams tables.
 public class DatabaseHelper extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "teams.db";
-    private static final int DATABASE_VERSION = 13; // Frissített verziószám!
-
+    private static final int DATABASE_VERSION = 13; // Database version
+    // Table names
     private static final String TABLE_EUROLEAGUE = "euroleague";
     private static final String TABLE_TEAMS = "teams";
+
+    // Column names
     private static final String COLUMN_ID = "id";
     private static final String COLUMN_TEAM_NAME = "team_name";
     private static final String COLUMN_WINS = "wins";
     private static final String COLUMN_LOSSES = "losses";
     private static final String COLUMN_MATCHES = "matches";
-
+    // SQL table creation statements
     private static final String CREATE_TABLE_EUROLEAGUE = "CREATE TABLE " + TABLE_EUROLEAGUE + " ("
             + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
             + COLUMN_TEAM_NAME + " TEXT NOT NULL, "
             + COLUMN_WINS + " INTEGER DEFAULT 0, "
             + COLUMN_LOSSES + " INTEGER DEFAULT 0, "
             + COLUMN_MATCHES + " INTEGER DEFAULT 0);";
-
+    // SQL table creation statements
     private static final String CREATE_TABLE_TEAMS = "CREATE TABLE " + TABLE_TEAMS + " ("
             + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
             + COLUMN_TEAM_NAME + " TEXT NOT NULL, "
             + COLUMN_WINS + " INTEGER DEFAULT 0, "
             + COLUMN_LOSSES + " INTEGER DEFAULT 0, "
             + COLUMN_MATCHES + " INTEGER DEFAULT 0);";
-
+    // Constructor
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
-
+    // Called when the database is first created
     @Override
     public void onCreate(SQLiteDatabase db) {
         Log.d("DatabaseHelper", "onCreate called!");
@@ -50,7 +53,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         insertTeamToEuroleague(db, "Real Madrid", 12, 2, 14);
         insertTeamToEuroleague(db, "Barcelona", 10, 5, 15);
     }
-
+    // Called when the database version is increased
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         Log.d("DatabaseHelper", "onUpgrade called! OldVersion: " + oldVersion + ", NewVersion: " + newVersion);
@@ -83,17 +86,17 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         insertTeam(db, "Real Madrid", 12, 2, 14);
         insertTeam(db, "Barcelona", 10, 5, 15);
     }
-
+    // Get all teams ordered by wins
     public Cursor getAllTeamsFromEuroleague() {
         SQLiteDatabase db = this.getReadableDatabase();
         return db.rawQuery("SELECT * FROM " + TABLE_EUROLEAGUE + " ORDER BY " + COLUMN_WINS + " DESC", null);
     }
-
+    // Get all teams ordered by wins
     public Cursor getAllTeamsFromTeamsTable() {
         SQLiteDatabase db = this.getReadableDatabase();
         return db.rawQuery("SELECT * FROM " + TABLE_TEAMS + " ORDER BY " + COLUMN_WINS + " DESC", null);
     }
-
+    // Insert a team into the Teams table
     public void insertTeam(SQLiteDatabase db, String teamName, int wins, int losses, int matches) {
         ContentValues values = new ContentValues();
         values.put(COLUMN_TEAM_NAME, teamName);
@@ -108,7 +111,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             Log.d("DatabaseHelper", "Successfully inserted team: " + teamName);
         }
     }
-
+    // Insert a team into the Euroleague table
     public void insertTeamToEuroleague(SQLiteDatabase db, String teamName, int wins, int losses, int matches) {
         ContentValues values = new ContentValues();
         values.put(COLUMN_TEAM_NAME, teamName);

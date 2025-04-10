@@ -1,5 +1,8 @@
+// HomeFragment displays top buttons, partial tables, and top news on the home screen.
+
 package wifi.svdew.myapplication.ui.home;
 
+// Fragment for the Home screen layout and interactions
 import android.annotation.SuppressLint;
 import android.database.Cursor;
 import android.graphics.Color;
@@ -41,22 +44,26 @@ import wifi.svdew.myapplication.ui.news.NewsRecycleAdapter;
 
 public class HomeFragment extends Fragment {
 
+    // ViewPager2 for switching between league tables, LinearLayout for displaying news
     private ViewPager2 tablePager;
     private LinearLayout newsContainer;
 
     private static final String API_KEY = "f58a9be9e97c4238993864b43e768db1";
 
+    // Inflate the layout for this fragment
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_home, container, false);
     }
 
+    // Initialize views and set up button click actions
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
 
         tablePager = view.findViewById(R.id.tablePager);
         newsContainer = view.findViewById(R.id.newsContainer);
 
+        // Set up horizontal RecyclerView for top buttons
         RecyclerView topButtonRecycler = view.findViewById(R.id.topButtonRecycler);
         topButtonRecycler.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
         loadMockTopButtons(topButtonRecycler);
@@ -83,16 +90,19 @@ public class HomeFragment extends Fragment {
         });
     }
 
+    // Load the first 4 entries of each table into the ViewPager
     private void loadTables() {
         DatabaseHelper db = new DatabaseHelper(getContext());
 
         List<TableLayout> tableLayouts = new ArrayList<>();
 
+        // Loop through the two tables: 'teams' and 'euroleague'
         for (int t = 1; t <= 2; t++) {
             TableLayout table = new TableLayout(requireContext());
             table.setStretchAllColumns(true);
             table.setPadding(16, 8, 16, 8);
 
+            // Create header row with column titles
             TableRow header = new TableRow(requireContext());
             header.setBackgroundColor(Color.DKGRAY);
             header.addView(makeCell("H", true));
@@ -102,10 +112,12 @@ public class HomeFragment extends Fragment {
             header.addView(makeCell("L", true));
             table.addView(header);
 
+            // Query the top 4 teams from the current table
             String tableName = (t == 1) ? "teams" : "euroleague";
             Cursor cursor = db.getReadableDatabase().rawQuery("SELECT * FROM " + tableName + " LIMIT 4", null);
             if (cursor.moveToFirst()) {
                 int index = 1;
+                // Create a new table row for each team
                 do {
                     TableRow row = new TableRow(requireContext());
                     row.addView(makeCell(String.valueOf(index), false));
@@ -119,9 +131,11 @@ public class HomeFragment extends Fragment {
                 cursor.close();
             }
 
+            // Add the constructed table to the list of layouts
             tableLayouts.add(table);
         }
 
+        // Set the ViewPager adapter to show each table
         tablePager.setAdapter(new RecyclerView.Adapter<>() {
             @NonNull
             @Override
@@ -149,14 +163,17 @@ public class HomeFragment extends Fragment {
         });
     }
 
+    // Load the top 6 news articles using the News API
     @SuppressLint("SetTextI18n")
     private void loadTopNews() {
+        // Set up RecyclerView for displaying news items
         RecyclerView recyclerView = requireView().findViewById(R.id.newsRecycler);
         recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
         recyclerView.setNestedScrollingEnabled(false);
 
         NewsApiInterface apiInterface = ApiClient.getRetrofitInstance().create(NewsApiInterface.class);
 
+        // Make asynchronous API call to fetch news headlines
         Call<ArticleResponse> call = apiInterface.getTopHeadlines("general", null, "en", API_KEY);
         call.enqueue(new Callback<>() {
             @Override
@@ -177,6 +194,7 @@ public class HomeFragment extends Fragment {
         });
     }
 
+    // Create mock team list with logos and images for testing
     private void loadMockTopButtons(RecyclerView recyclerView) {
         List<Team> mockTeams = new ArrayList<>();
         mockTeams.add(new Team(1, "Egis Körmend", R.drawable.egis_kormend_logo, R.drawable.kormend));
@@ -197,9 +215,11 @@ public class HomeFragment extends Fragment {
             NavController navController = NavHostFragment.findNavController(HomeFragment.this);
             navController.navigate(R.id.action_navigation_home_to_storyViewerFragment, args);
         });
+        // Set adapter to display the mock team buttons
         recyclerView.setAdapter(adapter);
     }
 
+    // Helper method to create a styled TextView for a table cell
     private TextView makeCell(String text, boolean header) {
         TextView tv = new TextView(requireContext());
         tv.setText(text);

@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     tools:context=".ui.tabella.TabellaFragment">
 
-    <!-- Elrejtett konténer -->
+    <!-- Hidden container for dynamically inserted fragments -->
     <FrameLayout
         android:id="@+id/container"
         android:layout_width="match_parent"
@@ -22,7 +22,7 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <!-- Gombok -->
+            <!-- Buttons for switching between the two tables -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -47,14 +47,14 @@
                     android:text="@string/euroleague" />
             </LinearLayout>
 
-            <!-- ScrollView (függőleges görgetés) -->
+            <!-- Vertical ScrollView containing the entire table section -->
             <ScrollView
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
                 android:fillViewport="true">
 
-                <!-- HorizontalScrollView (vízszintes görgetés) -->
+                <!-- Horizontal ScrollView for scrolling table content sideways -->
                 <HorizontalScrollView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

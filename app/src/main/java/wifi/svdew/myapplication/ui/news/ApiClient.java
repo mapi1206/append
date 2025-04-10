@@ -1,3 +1,4 @@
+// ApiClient sets up a Retrofit instance with a custom OkHttp client and User-Agent header
 package wifi.svdew.myapplication.ui.news;
 
 import okhttp3.OkHttpClient;
@@ -10,11 +11,13 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import java.io.IOException;
 
 public class ApiClient {
+    // Singleton Retrofit instance
     private static Retrofit retrofit = null;
 
+    // Returns the Retrofit instance, initializing it if necessary
     public static Retrofit getRetrofitInstance() {
         if (retrofit == null) {
-            // OkHttpClient hozzáadása User-Agent fejléccel
+            // Configure OkHttpClient with an interceptor to add a custom User-Agent header
             OkHttpClient client = new OkHttpClient.Builder()
                     .addInterceptor(new Interceptor() {
                         @Override
@@ -27,7 +30,7 @@ public class ApiClient {
                     })
                     .build();
 
-            // Retrofit konfigurálása az OkHttpClient-tel
+            // Configure Retrofit with base URL, custom client, and Gson converter
             retrofit = new Retrofit.Builder()
                     .baseUrl("https://newsapi.org/v2/")  // API alap URL
                     .client(client)  // A kliens hozzáadása a Retrofit-hez

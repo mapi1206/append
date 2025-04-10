@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     tools:context=".ui.tabella.TabellaFragment">
 
-    <!-- Gombok -->
+    <!-- Buttons for switching between tables -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -29,14 +29,14 @@
             android:text="Euroleague"/>
     </LinearLayout>
 
-    <!-- Fragmentek konténere -->
+    <!-- Container for dynamically loaded fragments -->
     <FrameLayout
         android:id="@+id/container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="100dp"/>
 
-    <!-- Táblázat -->
+    <!-- Scrollable table layout for displaying teams and stats -->
     <androidx.drawerlayout.widget.DrawerLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -55,7 +55,7 @@
                 android:stretchColumns="1,2,3,4"
                 android:background="@drawable/table_border">
 
-                <!-- Table Headers -->
+                <!-- Header row for the table columns -->
                 <TableRow
                     android:background="@drawable/table_border">
                     <TextView

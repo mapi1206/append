@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     android:background="#000000">
 
+    <!-- Progress bar indicating the duration of the current story -->
     <ProgressBar
         android:id="@+id/storyProgressBar"
         style="?android:attr/progressBarStyleHorizontal"
@@ -19,6 +20,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="8dp"/>
 
+    <!-- ViewPager2 for displaying and swiping through story images -->
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/storyViewPager"
         android:layout_width="0dp"
@@ -28,6 +30,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
+    <!-- Top bar with team logo and name -->
     <LinearLayout
         android:id="@+id/topBarLayout"
         android:layout_width="wrap_content"
@@ -39,6 +42,7 @@
         app:layout_constraintTop_toBottomOf="@id/storyProgressBar"
         app:layout_constraintStart_toStartOf="parent">
 
+        <!-- Team logo displayed in a circular frame -->
         <ImageView
             android:id="@+id/teamLogoImage"
             android:layout_width="32dp"
@@ -48,6 +52,7 @@
             android:background="@drawable/circle_background"
             android:clipToOutline="true" />
 
+        <!-- Team name displayed next to the logo -->
         <TextView
             android:id="@+id/teamNameText"
             android:layout_width="wrap_content"
@@ -59,6 +64,7 @@
             android:textAlignment="viewStart" />
     </LinearLayout>
 
+    <!-- Close button to exit the story viewer -->
     <ImageButton
         android:id="@+id/closeButton"
         android:layout_width="48dp"

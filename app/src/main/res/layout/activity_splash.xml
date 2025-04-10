@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- Layout for the splash screen displayed before loading the main content -->
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -7,6 +8,7 @@
     android:background="@color/white"
     tools:context=".ui.news.SplashActivity">
 
+    <!-- Centered layout containing logo, app name, and loading indicator -->
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -14,12 +16,14 @@
         android:gravity="center"
         android:orientation="vertical">
 
+        <!-- App logo displayed at the center of the splash screen -->
         <ImageView
             android:layout_width="120dp"
             android:layout_height="120dp"
             android:src="@drawable/baseline_newspaper_24"
             android:id="@+id/logo"/>
 
+        <!-- App name displayed below the logo -->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -28,6 +32,7 @@
             android:fontFamily="sans-serif-smallcaps"
             android:textColor="@color/white"/>
 
+        <!-- Indeterminate loading spinner -->
         <ProgressBar
             android:layout_width="20dp"
             android:layout_height="20dp"
@@ -36,6 +41,7 @@
 
     </LinearLayout>
 
+    <!-- Placeholder for fragment content that may be loaded after the splash -->
     <FrameLayout
         android:id="@+id/fragment_container"
         android:layout_width="match_parent"

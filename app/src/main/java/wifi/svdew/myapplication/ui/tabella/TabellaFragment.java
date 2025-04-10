@@ -1,5 +1,7 @@
 package wifi.svdew.myapplication.ui.tabella;
 
+// Fragment that displays two tables (teams and Euroleague) with switchable views
+
 import android.database.Cursor;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -21,10 +23,14 @@ import wifi.svdew.myapplication.datenbank.DatabaseHelper;
 
 public class TabellaFragment extends Fragment {
 
+    // View binding for accessing layout views
     private FragmentTabellaBinding binding;
+
+    // Table layouts and database helper
     private TableLayout tableLayout1, tableLayout2;
     private DatabaseHelper databaseHelper;
 
+    // Inflate the layout, set up buttons and display default table
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -38,21 +44,21 @@ public class TabellaFragment extends Fragment {
         tableLayout2 = view.findViewById(R.id.teamTableLayout2);
         databaseHelper = new DatabaseHelper(getContext());
 
-        // Gombok eseménykezelői, teszt Log.d-vel
+        // Set click listeners for buttons to show the appropriate table
         btnShowTable1.setOnClickListener(v -> {
             Log.d("BUTTON_CLICK", "btn8 (MB1) clicked");
-            showTable(1); // Az első táblázatot mutatjuk
+            showTable(1); // Show the first table
         });
 
         btnShowTable2.setOnClickListener(v -> {
             Log.d("BUTTON_CLICK", "btn9 (Euroleague) clicked");
-            showTable(2); // A második táblázatot mutatjuk
+            showTable(2); // Show the second table
         });
 
-        // Alapértelmezett táblázat megjelenítése
+        // Display the default table
         showTable(1);
 
-        // Adatok betöltése mindkét táblához
+        // Load data for both tables
         loadTeamsTable(tableLayout1);         // This loads 'teams' table
         loadEuroleagueTable(tableLayout2);    // This loads 'euroleague' table
 
@@ -62,14 +68,12 @@ public class TabellaFragment extends Fragment {
         explanation1.setPadding(16, 16, 16, 16);
         explanation1.setTextSize(14);
 
-
-
         ((ViewGroup) tableLayout1.getParent()).addView(explanation1);
-
 
         return view;
     }
 
+    // Show one table and hide the other based on the selected table number
     private void showTable(int tableNumber) {
         if (tableNumber == 1) {
             tableLayout1.setVisibility(View.VISIBLE);
@@ -80,19 +84,23 @@ public class TabellaFragment extends Fragment {
         }
     }
 
+    // Load data into the respective table from the database
     private void loadTeamsTable(TableLayout tableLayout) {
         Cursor cursor = databaseHelper.getAllTeamsFromTeamsTable();
         loadCursorIntoTable(tableLayout, cursor);
     }
 
+    // Load data into the respective table from the database
     private void loadEuroleagueTable(TableLayout tableLayout) {
         Cursor cursor = databaseHelper.getAllTeamsFromEuroleague();
         loadCursorIntoTable(tableLayout, cursor);
     }
 
+    // Populate the given TableLayout with rows from the database cursor
     private void loadCursorIntoTable(TableLayout tableLayout, Cursor cursor) {
         if (cursor != null && cursor.getCount() > 0) {
             int index = 1;
+            // Iterate over the cursor and create table rows
             while (cursor.moveToNext()) {
                 TableRow tableRow = new TableRow(getContext());
 
@@ -111,6 +119,7 @@ public class TabellaFragment extends Fragment {
         }
     }
 
+    // Helper method to create a styled TextView cell for the table
     private TextView createCell(String text) {
         TextView textView = new TextView(getContext());
         textView.setText(text);
@@ -123,6 +132,7 @@ public class TabellaFragment extends Fragment {
         return textView;
     }
 
+    // Clear binding when the view is destroyed
     @Override
     public void onDestroyView() {
         super.onDestroyView();

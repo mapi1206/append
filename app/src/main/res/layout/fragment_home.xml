@@ -14,7 +14,7 @@
         android:orientation="vertical"
         android:padding="12dp">
 
-        <!-- Insta-sztori karikák -->
+        <!-- Instagram-style story buttons (circular) -->
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/topButtonRecycler"
             android:layout_width="match_parent"
@@ -23,7 +23,7 @@
             android:orientation="horizontal"
             android:overScrollMode="never" />
 
-        <!-- Táblázatok szekció -->
+        <!-- Tables section -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -60,7 +60,7 @@
             android:layout_marginBottom="16dp"
             android:orientation="horizontal" />
 
-        <!-- News blokk -->
+        <!-- News section -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
