@@ -3,7 +3,7 @@
     <string name="title_home">Home</string>
     <string name="title_tabella">Standings</string>
     <string name="title_hirek">News</string>
-    <string name="title_notifications">Hírek</string>
+    <string name="title_notifications">News</string>
     <string name="recycler_view_description">Lista elemek megjelenítése</string>
     <string name="table_scroll_description">Scrollable table view</string>
     <string name="header_position">P</string>
