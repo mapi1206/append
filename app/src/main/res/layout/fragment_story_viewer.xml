@@ -57,7 +57,7 @@
             android:id="@+id/teamNameText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Team Name"
+            android:text="@string/team_name"
             android:textColor="#FFFFFF"
             android:textStyle="bold"
             android:textSize="18sp"

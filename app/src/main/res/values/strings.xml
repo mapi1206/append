@@ -25,4 +25,6 @@
     <string name="more">More</string>
     <string name="story_image">Story image</string>
     <string name="close">Close</string>
+    <string name="teams">Teams</string>
+    <string name="team_name">Team Name</string>
 </resources>
